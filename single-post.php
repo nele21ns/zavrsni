@@ -40,9 +40,7 @@
 <body>
 
 <?php include('header.php'); ?>
-
-
-<?php
+<div><?php
                 if (isset($_GET['posts_id'])) {
 
                     // pripremamo upit
@@ -59,16 +57,16 @@
                     // punimo promenjivu sa rezultatom upita
                     $post = $statement->fetch();
 
-                    // koristite var_dump kada god treba da proverite sadrzaj neke promenjive
-                        echo '<pre>';
-                        var_dump($post);
-                        echo '</pre>';                    
+                    // koristimo var_dump kada god treba da proverite sadrzaj neke promenjive
+                        // echo '<pre>';
+                        // var_dump($post);
+                        // echo '</pre>';                    
 
             ?>
 
 <?php
                             
-                            //DOBAVLJAMO KOMENTARE ZA OGLAS
+                            
                             // pripremamo upit
                             $sql = "SELECT * from comments where post_id = {$_GET['posts_id']} order by created_at DESC";
                             $statement = $connection->prepare($sql);
@@ -83,13 +81,12 @@
                             // punimo promenjivu sa rezultatom upita
                             $comments = $statement->fetchAll();
 
-                            // koristite var_dump kada god treba da proverite sadrzaj neke promenjive
-                                echo '<pre>';
-                                var_dump($comments);
-                                echo '</pre>';
+                            // koristimo var_dump kada god treba da proverite sadrzaj neke promenjive
+                                // echo '<pre>';
+                                // var_dump($comments);
+                                // echo '</pre>';
 
-                    ?>
-
+                    ?></div>
 <?php include('sidebar.php'); ?>
 
 <div class="blog-post">
@@ -109,7 +106,9 @@
                                         <i>posted by:</i> <strong><?php echo $comment['author'];?><hr class="comment-ruller"></strong>
                                 </li>  
                             </ul> 
+                            
                              <?php }?>
+                             </div>
 
 
 
