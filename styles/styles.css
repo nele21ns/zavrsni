@@ -17,10 +17,24 @@ h4,
 h5,
 .h5,
 h6,
-.h6 {
+.h6,
+.blog-post-title {
     color: #b34848;
 }
 
-.blog-post-title:hover {
+.blog-post-title:hover,
+.blog-post-title:link {
     text-decoration: underline;
 }
+
+.single-comment {
+    display: inline;
+}
+
+.comment-ruller,
+.single-comment {
+    width:30%;
+    color: red;
+    display: inline-block;
+}
+
