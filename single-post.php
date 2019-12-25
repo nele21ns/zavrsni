@@ -1,6 +1,7 @@
 <?php
     // ako su mysql username/password i ime baze na vasim racunarima drugaciji
     // obavezno ih ovde zamenite
+    // moguce da je password "vivify"
     $servername = "127.0.0.1";
     $username = "root";
     $password = "";
@@ -39,11 +40,13 @@
 
 <body>
 
-<?php include('header.php'); ?>
-<div><?php
+<?php include('header.php'); 
+    ?>
+            
+            <?php
                 if (isset($_GET['posts_id'])) {
 
-                    // pripremamo upit
+                    // pripremamo upit za postove
                     $sql = "SELECT * from posts WHERE posts.id= {$_GET['posts_id']}";
                     $statement = $connection->prepare($sql);
 
@@ -55,19 +58,16 @@
                     $statement->setFetchMode(PDO::FETCH_ASSOC);
 
                     // punimo promenjivu sa rezultatom upita
-                    $post = $statement->fetch();
+                    $singlePost = $statement->fetch();
 
                     // koristimo var_dump kada god treba da proverite sadrzaj neke promenjive
                         // echo '<pre>';
-                        // var_dump($post);
+                        // var_dump($singlePost);
                         // echo '</pre>';                    
-
             ?>
 
-<?php
-                            
-                            
-                            // pripremamo upit
+            <?php 
+                            // pripremamo upit za komentare
                             $sql = "SELECT * from comments where post_id = {$_GET['posts_id']} order by created_at DESC";
                             $statement = $connection->prepare($sql);
 
@@ -85,54 +85,54 @@
                                 // echo '<pre>';
                                 // var_dump($comments);
                                 // echo '</pre>';
-
-                    ?></div>
-<?php include('sidebar.php'); ?>
-
-<div class="blog-post">
-                <h2 class="blog-post-title"><?php echo $post['title']?></h2>
-                <p class="blog-post-meta"><?php echo $post['created_at']?> by <a href="#"><?php echo $post['author']?></a></p>
-
-                <p><?php echo $post['body']?></p>
+                    ?>
                 
-            </div>
+<main role="main" class="container">
 
-            
-                            <div class="single-comment">
-                            <?php foreach ($comments as $comment) { ?>
-                            <ul type = "none">
-                                <li>
-                                    <?php echo $comment['text'];?> <br>  
-                                        <i>posted by:</i> <strong><?php echo $comment['author'];?><hr class="comment-ruller"></strong>
-                                </li>  
-                            </ul> 
-                            
-                             <?php }?>
-                             </div>
+    <div class="row">                    
 
+        <div class="blog-post" >
+                        <h2 class="blog-post-title"><?php echo $singlePost['title']?></h2>
+                        <p class="blog-post-meta"><?php echo $singlePost['created_at']?> by <a href="#"><?php echo $singlePost['author']?></a></p>
 
+                        <p><b><?php echo $singlePost['body']?></b>
+                        <br>
+                        <br>
+                        Komentari:</p>
 
+                            <div class="single-comment" >
+                            <?php include('comments.php'); ?>
+                             </div> <!-- single-comment -->
+            </div> <!-- blog-post -->
 
+                <?php include('sidebar.php'); ?>
 
+    </div> <!-- row -->
 
-
-
-
-
-
-
-
-
-
-
-
+</main>    
 
 <?php
-                } else {
-                    echo('post_id nije prosledjen kroz $_GET');
+                } else {?>
+
+<main role="main" class="container">
+
+    <div class="row">
+
+        <div class="col-sm-8 blog-main">
+
+            <div class="blog-post">
+
+                   <div class= "blog-post-title"><a href='home.php'><?php echo('post_id nije prosledjen kroz $_GET');?><a>
+
+                   </div> <!-- title -->
+            </div> <!-- blog-post -->  
+        </div> <!-- blog-main -->            
+                    <?php include ('sidebar.php');
                 }
             ?>
+    </div> <!-- row -->
 
 <?php include ('footer.php'); ?>
+
 </body>
 </html>

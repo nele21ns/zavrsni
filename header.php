@@ -2,11 +2,11 @@
     <div class="blog-masthead">
         <div class="container">
             <nav class="nav">
-                <a class="nav-link active" href="#">Home</a>
-                <a class="nav-link" href="/comments.php">New features</a>
-                <a class="nav-link" href="/single-post.php">Press</a>
-                <a class="nav-link" href="/sidebar.php">New hires</a>
-                <a class="nav-link" href="/posts.php">About</a>
+                <a class="nav-link active" href='home.php'>Home</a>
+                <a class="nav-link" href='comments.php'>Comments</a>
+                <a class="nav-link" href='single-post.php'>Single Posts</a>
+                <a class="nav-link" href='create-post.php'>Create posts</a>
+                <a class="nav-link" href='posts.php'>Posts</a>
             </nav>
         </div>
     </div>
@@ -17,4 +17,4 @@
             <p class="lead blog-description">An example blog template built with Bootstrap.</p>
         </div>
     </div>
-</header>
+</header> <!-- blog-header -->
