@@ -74,8 +74,30 @@
                         <h2 class="blog-post-title"><?php echo $singlePost['title']?></h2>
                         <p class="blog-post-meta"><?php echo $singlePost['created_at']?> by <a href="#"><?php echo $singlePost['author']?></a></p>
 
-                        <p><b><?php echo $singlePost['body']?></b>
+                        <p><b><?php echo $singlePost['body']?></b></p>
                         <br>
+                        <p>Komentari:</p>
+
+                        <form method='POST' action='create-comment.php'>
+
+                            <p>
+                            <label>Name:
+                            <input type="text" name="name" rows="5">
+                            </label> 
+                            </p>
+
+                            <p>
+                            <label>Comment: </label>
+                            <textarea id=”comment-id” name="comment" rows=”5”></textarea>
+                            </label>
+                            </p>
+
+                            <p>
+                            <input type="submit" name = "submit" value = "Dodaj komentar">
+                            </p>
+                        </form>
+                    
+
                         <br>
                         <br>
                     <button style= "display:block" class= "btn" onclick="myFunction()"> Hide Comments</button>
