@@ -1,10 +1,30 @@
-<?php
-                if (isset($_GET['posts_id'])) {
+        <?php 
 
-   ?>
+            if (isset($_GET['posts_id'])) {
+
+                            // pripremamo upit za komentare
+                            $sql = "SELECT * from comments where post_id = {$_GET['posts_id']} order by created_at DESC";
+                            $statement = $connection->prepare($sql);
+
+                            // izvrsavamo upit
+                            $statement->execute();
+
+                            // zelimo da se rezultat vrati kao asocijativni niz.
+                            // ukoliko izostavimo ovu liniju, vratice nam se obican, numerisan niz
+                            $statement->setFetchMode(PDO::FETCH_ASSOC);
+
+                            // punimo promenjivu sa rezultatom upita
+                            $comments = $statement->fetchAll();
+
+                            // koristimo var_dump kada god treba da proverite sadrzaj neke promenjive
+                                // echo '<pre>';
+                                // var_dump($comments);
+                                // echo '</pre>';
+                    ?>
+                
     <ul class="comments-ul">
     <?php foreach ($comments as $comment) { ?>
-        <li>
+        <li class= "comments-li">
             <?php echo $comment['text'];?> <br>  
                 <i>commented by:</i> <strong><?php echo $comment['author'];?></strong> <br>
                 <hr class="comment-ruller">

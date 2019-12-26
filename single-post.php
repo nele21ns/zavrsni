@@ -34,8 +34,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
-    <link href="styles/blog.css" rel="stylesheet">
-    <link href= "styles/styles.css" rel="stylesheet">
+    <link href="styles/blog.css" type="text/css" rel="stylesheet">
+    <link href= "styles/styles.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
@@ -66,27 +66,7 @@
                         // echo '</pre>';                    
             ?>
 
-            <?php 
-                            // pripremamo upit za komentare
-                            $sql = "SELECT * from comments where post_id = {$_GET['posts_id']} order by created_at DESC";
-                            $statement = $connection->prepare($sql);
 
-                            // izvrsavamo upit
-                            $statement->execute();
-
-                            // zelimo da se rezultat vrati kao asocijativni niz.
-                            // ukoliko izostavimo ovu liniju, vratice nam se obican, numerisan niz
-                            $statement->setFetchMode(PDO::FETCH_ASSOC);
-
-                            // punimo promenjivu sa rezultatom upita
-                            $comments = $statement->fetchAll();
-
-                            // koristimo var_dump kada god treba da proverite sadrzaj neke promenjive
-                                // echo '<pre>';
-                                // var_dump($comments);
-                                // echo '</pre>';
-                    ?>
-                
 <main role="main" class="container">
 
     <div class="row">                    
@@ -98,8 +78,9 @@
                         <p><b><?php echo $singlePost['body']?></b>
                         <br>
                         <br>
-                        Komentari:</p>
-
+                        <br>
+                    <button style= "display:block" class= "btn" onclick="myFunction()"> Hide Comments</button>
+                    <br>
                             <div class="single-comment" >
                             <?php include('comments.php'); ?>
                              </div> <!-- single-comment -->
@@ -135,4 +116,5 @@
 <?php include ('footer.php'); ?>
 
 </body>
+<script type="text/javascript" src="main.js"></script>
 </html>

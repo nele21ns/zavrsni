@@ -31,3 +31,10 @@ h6,
     list-style: none;
     padding-left: 0;
 }
+
+.hidden-comment {
+display:none;
+}
+ .btn {
+     width: 200px;
+ }
