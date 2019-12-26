@@ -1,22 +1,4 @@
-<?php
-            // ako su mysql username/password i ime baze na vasim racunarima drugaciji
-            // obavezno ih ovde zamenite
-            // moguce da je password "vivify"
-            $servername = "127.0.0.1";
-            $username = "root";
-            $password = "";
-            $dbname = "blog";
-
-            try {
-                $connection = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                
-                $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            }
-                catch(PDOException $e)
-                {
-                    echo $e->getMessage();
-                }
-?>
+<?php require('dbcon.php'); ?>
 
 <!doctype html>
     <html lang="en">
@@ -38,16 +20,16 @@
             <link href= "styles/styles.css" rel="stylesheet">
         </head>
 
-
+        
     <?php
 
                 // pripremamo upit
                 $sql = "SELECT id, title, body, author, created_at FROM posts ORDER BY created_at DESC";
                 $statement = $connection->prepare($sql);
-
+                
                 // izvrsavamo upit
-                $statement->execute();
-
+                var_dump($statement->execute());
+                
                 // zelimo da se rezultat vrati kao asocijativni niz.
                 // ukoliko izostavimo ovu liniju, vratice nam se obican, numerisan niz
                 $statement->setFetchMode(PDO::FETCH_ASSOC);
