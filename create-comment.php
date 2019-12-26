@@ -57,7 +57,7 @@ echo "pre prepare";
 } catch(PDOException $e){
     die("ERROR: Could not able to execute $sql. " . $e->getMessage());
 }
-header('Location: single-post.php?posts_id=' . $_POST['post-id']);
+header('Location: single-post.php?posts_id=' . $_POST['post-id'] . '&is_valid=true');
 
 // Close connection
     unset($pdo);
@@ -67,6 +67,7 @@ header('Location: single-post.php?posts_id=' . $_POST['post-id']);
 //  } 
 //  else {
 
+    header('Location: single-post.php?posts_id=' . $_POST['post-id'] . '&is_valid=false');
 //    echo "ne radi";   
 //     // header('Location: home.php');
 //  };
