@@ -35,6 +35,6 @@ h6,
 .hidden-comment {
 display:none;
 }
- .btn {
+ .btn, .btn-default {
      width: 200px;
  }

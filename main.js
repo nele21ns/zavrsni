@@ -8,7 +8,7 @@ function myFunction() {
             var x = document.getElementsByClassName("comments-li");
             var i;
             for (i = 0; i < x.length; i++) {
-            x[i].classList.add("hidden-comment") ;
+            x[i].classList.add("hidden-comment");
             }}
         else { elem.innerText = "Hide Comments";
             var x = document.getElementsByClassName("comments-li");

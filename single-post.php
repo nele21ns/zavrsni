@@ -66,7 +66,6 @@
                         // echo '</pre>';                    
             ?>
 
-
 <main role="main" class="container">
 
     <div class="row">                    
@@ -97,9 +96,9 @@
 
 <main role="main" class="container">
 
-    <div class="row">
+    <div class="row" style="border red solid 2px">
 
-        <div class="col-sm-8 blog-main">
+        <div class="col-sm-8 blog-main" style="border blue solid 2px">
 
             <div class="blog-post">
 
@@ -109,12 +108,12 @@
             </div> <!-- blog-post -->  
         </div> <!-- blog-main -->            
                     <?php include ('sidebar.php');
-                }
-            ?>
+                        }
+                    ?>
     </div> <!-- row -->
-
-<?php include ('footer.php'); ?>
+</main>
+<?php include ('footer.php');?>
 
 </body>
-<script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="main.js"></script>
 </html>
