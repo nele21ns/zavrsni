@@ -1,6 +1,31 @@
+<?php
+if (isset($_POST['comment-id']{
+try{
+    // Create prepared statement
+    $sql = "INSERT INTO comments (author, text, post_id, created_at) VALUES (:author, :text, :post_id, :created_at)";
+echo "pre prepare";
+    $stmt = $connection->prepare($sql);
+    echo "posle prepare";
+    // Bind parameters to statement
+    $stmt->bindParam(':author', $_POST['name']);
+    $stmt->bindParam(':text', $_POST['comment']);
+    $stmt->bindParam(':post_id', $_POST['post-id']);
+    $stmt->bindParam(':created_at', date('Y-m-d H:i:s'));
+    
+    // $stmt->debugDumpParams();
+    
+    // Execute the prepared statement
+    $stmt->execute();
+
+    echo "Records inserted successfully.";
+} catch(PDOException $e){
+    die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+}}
+       ?> 
+        
         <?php 
 
-            if (isset($_GET['posts_id'])) {
+            if (isset($_REQUEST['posts_id'])) {
 
                             // pripremamo upit za komentare
                             $sql = "SELECT * from comments where post_id = {$_GET['posts_id']} order by created_at DESC";
@@ -25,8 +50,13 @@
     <ul class="comments-ul">
     <?php foreach ($comments as $comment) { ?>
         <li class= "comments-li">
-            <?php echo $comment['text'];?> <br>  
+            <?php echo $comment['text'];?> <br>
+            
                 <i>commented by:</i> <strong><?php echo $comment['author'];?></strong> <br>
+                <form method="post" action="">
+                <input type="hidden" name="comment-id" value="<?php echo($comments['id'])?>">
+                <input type="hidden" name="post-id" value="<?php echo(($_REQUEST['posts_id']))?>">
+                <button type="submit">Obrisi komentar</button></form>
                 <hr class="comment-ruller">
         </li>  
      <?php }?>
