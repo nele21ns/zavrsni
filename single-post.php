@@ -81,7 +81,7 @@ if (isset($_POST['delete-post-id'])) {
 
                         <!-- Single post -->
                         <h2 class="blog-post-title"><?php echo $singlePost['title']?></h2>
-                        <p class="blog-post-meta"><?php echo $singlePost['created_at']?> by <a href="#"><?php echo $singlePost['author']?></a></p>
+                        <p class="blog-post-meta"><?php echo(date_format (new DateTime($singlePost['created_at']), 'F j, Y'))?> by <a href="#"><?php echo $singlePost['author']?></a></p>
 
                         <p><b><?php echo $singlePost['body']?></b></p>
                        

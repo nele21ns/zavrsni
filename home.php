@@ -53,9 +53,9 @@
                                 foreach ($posts as $post) {
                                 ?>
                                 <!-- All posts -->
-                                <div class="blog-home" >
+                                <div class="blog-post blog-home" >
                                         <h2 class="blog-post-title"><a target="_blank" href="single-post.php?posts_id=<?php echo ($post['id']) ?>"><?php echo $post['title']?> <a></h2>
-                                        <p class="blog-post-meta"><?php echo $post['created_at']?> by <a href="#"><?php echo $post['author']?></a></p>
+                                        <p class="blog-post-meta"><?php echo(date_format (new DateTime($post['created_at']), 'F j, Y'))?> by <a href="#"><?php echo $post['author']?></a></p>
                                         <p><?php echo $post['body']?></p>
 
                                 </div>

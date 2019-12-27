@@ -2,24 +2,19 @@
 
     <?php
 
-                // pripremamo upit
+                // Create prepared statement
                 $sql = "SELECT id, title, body, author, created_at FROM posts ORDER BY created_at DESC";
                 $statement = $connection->prepare($sql);
 
-                // izvrsavamo upit
+                // Execute the prepared statement
                 $statement->execute();
 
-                // zelimo da se rezultat vrati kao asocijativni niz.
-                // ukoliko izostavimo ovu liniju, vratice nam se obican, numerisan niz
+                // If we want to get associative array
                 $statement->setFetchMode(PDO::FETCH_ASSOC);
 
-                // punimo promenjivu sa rezultatom upita
+                // Filling up variable with results of query
                 $posts = $statement->fetchAll();
 
-                // koristimo var_dump kada god treba da proverite sadrzaj neke promenjive
-                    // echo '<pre>';
-                    // var_dump($posts);
-                    // echo '</pre>';
         ?>
 
 <!doctype html>
@@ -54,22 +49,15 @@
                         <?php
                                 foreach ($posts as $post) {
                             ?>
-                    
+                             <!-- All posts -->
                             <div class="blog-post">
                                     <h2 class="blog-post-title"><a href="single-post.php?posts_id=<?php echo ($post['id']) ?>"><?php echo $post['title']?> <a></h2>
-                                    <p class="blog-post-meta"><?php echo $post['created_at']?> by <a href="#"><?php echo $post['author']?></a></p>
+                                    <p class="blog-post-meta"><?php echo(date_format (new DateTime($post['created_at']), 'F j, Y')); ?> by <a href="#"><?php echo $post['author']?></a></p>
                                     <p><?php echo $post['body']?></p>
-
                             </div>
                                         <?php
                                             }
                                             ?>
-
-                            
-                                <nav class="blog-pagination">
-                                    <a class="btn btn-outline-primary" href="#">Older</a>
-                                    <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
-                                </nav>
             
             </div> <!-- blog main -->
             
