@@ -3,9 +3,9 @@
         <div class="container">
             <nav class="nav">
                 <a class="nav-link active" href='home.php'>Home</a>
+                <a class="nav-link" href='create.php'>Create</a>
                 <a class="nav-link" href='comments.php'>Comments</a>
                 <a class="nav-link" href='single-post.php'>Single Posts</a>
-                <a class="nav-link" href='create-post.php'>Create posts</a>
                 <a class="nav-link" href='posts.php'>Posts</a>
                 <a class="nav-link" href='create-comment.php'>Create Comments</a>
             </nav>

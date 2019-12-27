@@ -1,7 +1,7 @@
 function myFunction() {
 
         var x = document.getElementsByClassName("comments-li")
-        var elem = document.getElementsByClassName("btn")[0];
+        var elem = document.getElementById("hide-comments-button");
         
         if (elem.innerText == "Hide Comments") { 
             elem.innerText = "Show Comments";

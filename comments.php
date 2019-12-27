@@ -1,28 +1,33 @@
+<?php require('dbcon.php'); ?>
+
+
 <?php
-if (isset($_POST['comment-id']{
+
+if (isset($_POST['comment-id'])) {
+ echo "comment id je setovan!";
 try{
     // Create prepared statement
-    $sql = "INSERT INTO comments (author, text, post_id, created_at) VALUES (:author, :text, :post_id, :created_at)";
-echo "pre prepare";
+    $sql = "DELETE FROM comments WHERE id= :id;";
+    echo "pre prepare za delete";
     $stmt = $connection->prepare($sql);
-    echo "posle prepare";
+    echo "posle prepare za delete";
     // Bind parameters to statement
-    $stmt->bindParam(':author', $_POST['name']);
-    $stmt->bindParam(':text', $_POST['comment']);
-    $stmt->bindParam(':post_id', $_POST['post-id']);
-    $stmt->bindParam(':created_at', date('Y-m-d H:i:s'));
+    $stmt->bindParam(':id', $_POST['comment-id']);
+   
     
     // $stmt->debugDumpParams();
     
     // Execute the prepared statement
     $stmt->execute();
 
-    echo "Records inserted successfully.";
+    echo "Records DELETE inserted successfully.";
+    header('Location: single-post.php?posts_id=' . $_POST['post-id']);
 } catch(PDOException $e){
     die("ERROR: Could not able to execute $sql. " . $e->getMessage());
-}}
-       ?> 
-        
+}
+}
+   ?> 
+ 
         <?php 
 
             if (isset($_REQUEST['posts_id'])) {
@@ -49,14 +54,19 @@ echo "pre prepare";
                 
     <ul class="comments-ul">
     <?php foreach ($comments as $comment) { ?>
+        
+
+
         <li class= "comments-li">
             <?php echo $comment['text'];?> <br>
             
                 <i>commented by:</i> <strong><?php echo $comment['author'];?></strong> <br>
+                
+                <!-- DELETE COMMENTS BUTTON -->
                 <form method="post" action="">
-                <input type="hidden" name="comment-id" value="<?php echo($comments['id'])?>">
-                <input type="hidden" name="post-id" value="<?php echo(($_REQUEST['posts_id']))?>">
-                <button type="submit">Obrisi komentar</button></form>
+                <input type="hidden" name="comment-id" value="<?php echo($comment['id'])?>">
+                <input type="hidden" name="post-id" value="<?php echo($_REQUEST['posts_id'])?>">
+                <button type="submit" class="btn-default">Delete this comment</button></form>
                 <hr class="comment-ruller">
         </li>  
      <?php }?>

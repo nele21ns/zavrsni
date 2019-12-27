@@ -4,7 +4,7 @@
     // moguce da je password "vivify"
     $servername = "127.0.0.1";
     $username = "root";
-    $password = "vivify";
+    $password = "";
     $dbname = "blog";
 
     try {

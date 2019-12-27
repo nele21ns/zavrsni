@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Vivify Blog</title>
+    <title>Single Post</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
@@ -57,8 +57,12 @@
                         <p class="blog-post-meta"><?php echo $singlePost['created_at']?> by <a href="#"><?php echo $singlePost['author']?></a></p>
 
                         <p><b><?php echo $singlePost['body']?></b></p>
+                       
+                       <!-- DELETE BUTTON for POSTS -->
+                        <p><button type="submit" class="btn-primary">Delete this post</button><p>
+
                         <br>
-                        <p>Komentari:</p>
+                        
 
                         <form method='POST' action='create-comment.php'>
 
@@ -78,16 +82,22 @@
                             </label>
                             </p>
 
+                         <?php if ( isset($_GET['is_valid'])) {
+                            if (($_GET['is_valid']) === "false") { ?>
+                           <div class="alert-danger"><p> Warning: Please fill all fields<p></div>
+                         <?php }}?>
+
                             <p>
-                            <input type="submit" name = "submit" value = "Dodaj komentar">
+                            <input type="submit" name = "submit" value = "Add comment">
                             </p>
-                        </form>
+                        </form>        
+                        <br>
+                        <p>All Comments:</p>
+                        <br>
+                    <p><button class= "btn" id="hide-comments-button" onclick="myFunction()"> Hide Comments</button><p>
+                    <br>
                     
 
-                        <br>
-                        <br>
-                    <button style= "display:block" class= "btn" onclick="myFunction()"> Hide Comments</button>
-                    <br>
                             <div class="single-comment" >
                             <?php include('comments.php'); ?>
                              </div> <!-- single-comment -->
