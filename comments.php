@@ -2,67 +2,61 @@
 
 
 <?php
-
-if (isset($_POST['comment-id'])) {
- echo "comment id je setovan!";
-try{
-    // Create prepared statement
-    $sql = "DELETE FROM comments WHERE id= :id;";
-    echo "pre prepare za delete";
-    $stmt = $connection->prepare($sql);
-    echo "posle prepare za delete";
-    // Bind parameters to statement
-    $stmt->bindParam(':id', $_POST['comment-id']);
-   
+// Delete comment request
+    if (isset($_POST['comment-id'])) {
     
-    // $stmt->debugDumpParams();
+    try{
+        // Create prepared statement
+        $sql = "DELETE FROM comments WHERE id= :id;";
+        
+        $stmt = $connection->prepare($sql);
+        
+        // Bind parameters to statement
+        $stmt->bindParam(':id', $_POST['comment-id']);
     
-    // Execute the prepared statement
-    $stmt->execute();
+        // $stmt->debugDumpParams();
+        
+        // Execute the prepared statement
+        $stmt->execute();
 
-    echo "Records DELETE inserted successfully.";
-    header('Location: single-post.php?posts_id=' . $_POST['post-id']);
-} catch(PDOException $e){
-    die("ERROR: Could not able to execute $sql. " . $e->getMessage());
-}
-}
+        // Redirecting to a post page
+        header('Location: single-post.php?posts_id=' . $_POST['post-id']);
+
+    } catch(PDOException $e){
+        die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+    }}
    ?> 
  
         <?php 
 
             if (isset($_REQUEST['posts_id'])) {
 
-                            // pripremamo upit za komentare
+                            // Create prepared statement
                             $sql = "SELECT * from comments where post_id = {$_GET['posts_id']} order by created_at DESC";
                             $statement = $connection->prepare($sql);
 
-                            // izvrsavamo upit
+                            // Execute the prepared statement
                             $statement->execute();
 
-                            // zelimo da se rezultat vrati kao asocijativni niz.
-                            // ukoliko izostavimo ovu liniju, vratice nam se obican, numerisan niz
+                            // If we want to get associative array
                             $statement->setFetchMode(PDO::FETCH_ASSOC);
 
-                            // punimo promenjivu sa rezultatom upita
+                            // Filling up variable with results of query
                             $comments = $statement->fetchAll();
 
-                            // koristimo var_dump kada god treba da proverite sadrzaj neke promenjive
-                                // echo '<pre>';
-                                // var_dump($comments);
-                                // echo '</pre>';
-                    ?>
+         ?>
                 
     <ul class="comments-ul">
     <?php foreach ($comments as $comment) { ?>
         
 
-
+            <!-- Comments List -->
         <li class= "comments-li">
             <?php echo $comment['text'];?> <br>
             
                 <i>commented by:</i> <strong><?php echo $comment['author'];?></strong> <br>
                 
-                <!-- DELETE COMMENTS BUTTON -->
+                <!-- DELETE COMMENTS BUTTON FORM -->
                 <form method="post" action="">
                 <input type="hidden" name="comment-id" value="<?php echo($comment['id'])?>">
                 <input type="hidden" name="post-id" value="<?php echo($_REQUEST['posts_id'])?>">
@@ -73,7 +67,7 @@ try{
      </ul> 
      <?php
 
-                } else {?>
+                } else {?> <!-- Opening empty page-->
                     
 <!doctype html>
 <html lang="en">

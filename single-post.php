@@ -1,5 +1,37 @@
 <?php require('dbcon.php'); ?>
 
+
+<?php
+if (isset($_POST['delete-post-id'])) {
+    echo "delete - post  id je setovan!";
+    
+    echo "posle post delete post id";
+   try{
+       // Create prepared statement
+       $sql = "DELETE FROM posts WHERE id = :id;";
+       echo "pre prepare za delete";
+       $stmt = $connection->prepare($sql);
+       echo "posle prepare za delete";
+       // Bind parameters to statement
+       $stmt->bindParam(':id', $_POST['delete-post-id']);
+      
+       
+       // $stmt->debugDumpParams();
+       
+       // Execute the prepared statement
+       $stmt->execute();
+   
+       echo "Records DELETE inserted successfully.";
+       header('Location: home.php');
+    echo "udjem u try";
+    echo($_POST['delete-post-id']);
+   } catch(PDOException $e){
+       die("ERROR: Could not able to execute $sql. " . $e->getMessage());
+   }
+   }
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -23,29 +55,22 @@
 <body>
 
 <?php include('header.php'); 
-    ?>
-            
+    ?>  
             <?php
                 if (isset($_GET['posts_id'])) {
 
-                    // pripremamo upit za postove
+                    // Create prepared statement
                     $sql = "SELECT * from posts WHERE posts.id= {$_GET['posts_id']}";
                     $statement = $connection->prepare($sql);
 
-                    // izvrsavamo upit
+                    // Execute the prepared statement
                     $statement->execute();
 
-                    // zelimo da se rezultat vrati kao asocijativni niz.
-                    // ukoliko izostavimo ovu liniju, vratice nam se obican, numerisan niz
+                    // If we want to get associative array
                     $statement->setFetchMode(PDO::FETCH_ASSOC);
 
-                    // punimo promenjivu sa rezultatom upita
-                    $singlePost = $statement->fetch();
-
-                    // koristimo var_dump kada god treba da proverite sadrzaj neke promenjive
-                        // echo '<pre>';
-                        // var_dump($singlePost);
-                        // echo '</pre>';                    
+                    // Filling up variable with results of query
+                    $singlePost = $statement->fetch();                  
             ?>
 
 <main role="main" class="container">
@@ -53,45 +78,38 @@
     <div class="row">                    
 
         <div class="blog-post" >
+
+                        <!-- Single post -->
                         <h2 class="blog-post-title"><?php echo $singlePost['title']?></h2>
                         <p class="blog-post-meta"><?php echo $singlePost['created_at']?> by <a href="#"><?php echo $singlePost['author']?></a></p>
 
                         <p><b><?php echo $singlePost['body']?></b></p>
                        
-                       <!-- DELETE BUTTON for POSTS -->
-                        <p><button type="submit" class="btn-primary">Delete this post</button><p>
-
+                       <!-- Delete POST button -->
+                       <form method="POST" action="" name = "delete-post-form">
+                        <input type="hidden" value="<?php echo($_GET['posts_id'])?>" name="delete-post-id">
+                        <p><button id= "delete-post-button" onclick="return ConfirmDelete()" type="submit" class="btn-primary">Delete this post</button><p>
+                        </form>
                         <br>
                         
+                        <!-- Create COMMENT form -->
+                        <p><form method='POST' action='create-comment.php'>
 
-                        <form method='POST' action='create-comment.php'>
+                            <p><label>Name: <input type="text" name="name"></label></p>
 
-                            <p>
-                            <label>Name:
-                            <input type="text" name="name">
-                            </label> 
-                            </p>
+                            <p><input type="hidden" value="<?php echo(($_GET['posts_id']))?>" name="post-id"></p>
 
-                            <p>
-                            <input type="hidden" value="<?php echo(($_GET['posts_id']))?>" name="post-id">
-                            </p>
+                            <p><label>Comment: <textarea id=”comment-id” name="comment" rows=”5”></textarea></label></p>
 
-                            <p>
-                            <label>Comment: </label>
-                            <textarea id=”comment-id” name="comment" rows=”5”></textarea>
-                            </label>
-                            </p>
+                            <!-- Alert if form isn't filled up correctly -->
+                            <?php if ( isset($_GET['is_valid'])) {
+                                if (($_GET['is_valid']) === "false") { ?>
+                            <div class="alert-danger"><p> Warning: Please fill all fields<p></div>
+                            <?php }}?>
 
-                         <?php if ( isset($_GET['is_valid'])) {
-                            if (($_GET['is_valid']) === "false") { ?>
-                           <div class="alert-danger"><p> Warning: Please fill all fields<p></div>
-                         <?php }}?>
-
-                            <p>
-                            <input type="submit" name = "submit" value = "Add comment">
-                            </p>
-                        </form>        
-                        <br>
+                            <p> <input type="submit" name = "submit" value = "Add comment"></p>
+                        </form><p>        
+                        
                         <p>All Comments:</p>
                         <br>
                     <p><button class= "btn" id="hide-comments-button" onclick="myFunction()"> Hide Comments</button><p>
@@ -123,12 +141,15 @@
                    <div class= "blog-post-title"><a href='home.php'><?php echo('post_id nije prosledjen kroz $_GET');?><a>
 
                    </div> <!-- title -->
+
             </div> <!-- blog-post -->  
+
         </div> <!-- blog-main -->            
                     <?php include ('sidebar.php');
                         }
                     ?>
     </div> <!-- row -->
+
 </main>
 <?php include ('footer.php');?>
 

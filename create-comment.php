@@ -33,24 +33,4 @@ try{
     header('Location: single-post.php?posts_id=' . $_POST['post-id'] . '&is_valid=false');
 
 }}
-
-
 ?>
-
-
-
-
-
-<!DOCTYPE html>
-
-<head>
-<title> create-comment</title>
-</head>
-<body>
-<p>ja sam create-comment.php</p>
-
-
-
-
-</body>
-</html>

@@ -19,4 +19,14 @@ function myFunction() {
         }}
 
         
+        
+     function ConfirmDelete()
+            {
+            var x = confirm("Do you really want to delete this post?");
+            if (x)
+                return true;
+            else
+                return false;
+            }
+
        
